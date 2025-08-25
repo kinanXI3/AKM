@@ -6,7 +6,10 @@
                     <h1 class="text-cyan-300 text-6xl font-bold">AKM</h1>
                     <p class="text-xl text-gray-300">Aplikasi Kehadiran Mahasiswa</p>
                 </div>
-                <a href="{{ route('show.login') }}" class="p-3 m-4 rounded-md bg-cyan-700 hover:bg-cyan-800 absolute bottom-0 right-0 hover:outline-2 hover:outline-cyan-800 hover:outline-offset-4 ease-in-out">Log In</a>
+                <div class="flex flex-row itmes-center align-center absolute bottom-0 right-0">
+                    <a href="{{ route('login') }}" class="p-3 m-4 rounded-md bg-cyan-700 hover:bg-cyan-800 hover:outline-2 hover:outline-cyan-800 hover:outline-offset-4 ease-in-out">Log In</a>
+                    <a href="{{ route('register') }}" class="p-3 m-4 rounded-md hover:outline-2 hover:outline-cyan-800 hover:outline-offset-4 ease-in-out">Register</a>
+                </div>
             </div>
         </div>
         <section class="min-w-full h-screen flex flex-col items-center justify-center p-10">
