@@ -13,7 +13,24 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <img src="{{ asset('images/icons/home.svg') }}" alt="home">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('data-mahasiswa')" :active="request()->routeIs('data-mahasiswa')">
+                        <img src="{{ asset('images/icons/person.svg') }}" alt="person">
+                        {{ __('Data Mahasiswa') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('data-kunjungan')" :active="request()->routeIs('data-kunjungan')">
+                        <img src="{{ asset('images/icons/data.svg') }}" alt="data">
+                        {{ __('Data Kunjungan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('riwayat-kunjungan')" :active="request()->routeIs('riwayat-kunjungan')">
+                        <img src="{{ asset('images/icons/activity.svg') }}" alt="activity">
+                        {{ __('Riwayat Kunjungan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('statistik-kunjungan')" :active="request()->routeIs('statistik-kunjungan')">
+                        <img src="{{ asset('images/icons/bar.svg') }}" alt="bar">
+                        {{ __('Statistik Kunjungan') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -22,7 +39,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex gap-3 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -35,6 +52,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
+                            <img src="{{ asset('images/icons/account.svg') }}" alt="account">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -45,6 +63,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
+                                <img src="{{ asset('images/icons/logout.svg') }}" alt="logout">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -68,9 +87,27 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <img src="{{ asset('images/icons/home.svg') }}" alt="home">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-        </div>
+                    <x-responsive-nav-link :href="route('data-mahasiswa')" :active="request()->routeIs('data-mahasiswa')">
+                        <img src="{{ asset('images/icons/person.svg') }}" alt="person">
+                        {{ __('Data Mahasiswa') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('data-kunjungan')" :active="request()->routeIs('data-kunjungan')">
+                        <img src="{{ asset('images/icons/data.svg') }}" alt="data">
+                        {{ __('Data Kunjungan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('riwayat-kunjungan')" :active="request()->routeIs('riwayat-kunjungan')">
+                        <img src="{{ asset('images/icons/activity.svg') }}" alt="activity">
+                        {{ __('Riwayat Kunjungan') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('statistik-kunjungan')" :active="request()->routeIs('statistik-kunjungan')">
+                        <img src="{{ asset('images/icons/bar.svg') }}" alt="bar">
+                        {{ __('Statistik Kunjungan') }}
+                    </x-responsive-nav-link>
+
+                    </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
