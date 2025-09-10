@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/admin', [ForbiddenController::class, 'showForbiddenPage'])->name('forbidden');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,4 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');
+// Route::get('/contoh/create', [App\Http\Controllers\ContohController::class, 'create'])->name('contoh.create');
 require __DIR__.'/auth.php';

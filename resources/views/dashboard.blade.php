@@ -4,14 +4,44 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <x-container-layout>
+        <div class="w-full flex sm:flex-row flex-col gap-3">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+            <!-- Total Pengunjung Hari Ini -->
+            <div class="w-full dark:bg-gray-700 p-4 rounded rounded-md dark:text-gray-100">
+                <h1>Total Pengunjung Hari Ini</h1>
+                <div class="w-full h-max flex flex-row items-center gap-4 p-3 my-3">
+                    <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
+                    <h1 class="text-3xl font-bold">150</h1>
                 </div>
+                <x-primary-button class="w-full">
+                    {{ __('Lihat Detail') }}
+                </x-primary-button>
+
+                <!-- Total Jurusan -->
+            </div>
+            <div class="w-full dark:bg-gray-700 p-4 rounded rounded-md dark:text-gray-100">
+                <h1>Total Jurusan</h1>
+                <div class="w-full h-max flex flex-row items-center gap-4 p-3 my-3">
+                    <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
+                    <h1 class="text-3xl font-bold">150</h1>
+                </div>
+                <x-primary-button class="w-full">
+                    {{ __('Lihat Detail') }}
+                </x-primary-button>
+            </div>
+
+            <!-- Total Mahasiswa Terdaftar -->
+            <div class="w-full dark:bg-gray-700 p-4 rounded rounded-md dark:text-gray-100">
+                <h1>Total Mahasiswa Terdaftar</h1>
+                <div class="w-full h-max flex flex-row items-center gap-4 p-3 my-3">
+                    <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
+                    <h1 class="text-3xl font-bold">150</h1>
+                </div>
+                <x-primary-button class="w-full">
+                    {{ __('Lihat Detail') }}
+                </x-primary-button>
             </div>
         </div>
-    </div>
+    </x-container-layout>
 </x-app-layout>

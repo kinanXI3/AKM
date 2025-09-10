@@ -27,4 +27,5 @@
         <!-- Art by: @sh0neas -->
         <img src="{{ asset('images/403.svg') }}" alt="@sh0neas" style="width: 560px; height: 560px; object-fit: cover;">
     </div>
-@include('components.footer')
+    </body>
+</html>
