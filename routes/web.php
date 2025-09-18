@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MahasiswaController;
+use App\Models\Mahasiswa;
 use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +18,8 @@ Route::get('/dashboard', function () {
 
 // Isi Aplikasi
 Route::get('/data-mahasiswa', function () {
-    return view('apps.data-mahasiswa');
+    $mahasiswa = Mahasiswa::all();
+    return view('apps.data-mahasiswa', compact('mahasiswa'));
 })->middleware(['auth', 'verified'])->name('data-mahasiswa');
 
 Route::get('/data-kunjungan', function () {
@@ -36,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('mahasiswa', MahasiswaController::class);
 
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');
 // Route::get('/contoh/create', [App\Http\Controllers\ContohController::class, 'create'])->name('contoh.create');

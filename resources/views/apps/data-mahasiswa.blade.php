@@ -5,73 +5,66 @@
         </h2>
     </x-slot>
 
-    <x-container-layout>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{-- Tombol Tambah Data--}}
+                    <x-primary-button class="mb-5" onclick="window.location='{{ route('mahasiswa.create') }}'">
+                            {{ __(' + Tambah Data') }}
+                    </x-primary-button>
 
+                    {{-- Tabel Data Mahasiswa --}}
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                                <tr>
+                                    <th class="px-4 py-2 text_left">NO</th>
+                                    <th class="px-4 py-2 text_left">NIM</th>
+                                    <th class="px-4 py-2 text_left">Nama</th>
+                                    <th class="px-4 py-2 text_left">Jurusan</th>
+                                    <th class="px-4 py-2 text_left">Angkatan</th>
+                                    <th class="px-4 py-2 text_left">Status</th>
+                                    <th class="px-4 py-2 text_left">Aksi</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                @forelse ($mahasiswa as $mhs)
+                                    <tr class="border-t border-gray-200 dark:border-gray-700">
+                                        <td class="px-4 py-2">{{ $mhs->nim }}</td>
+                                        <td class="px-4 py-2">{{ $mhs->nama }}</td>
+                                        <td class="px-4 py-2">{{ $mhs->jurusan }}</td>
+                                        <td class="px-4 py-2">{{ $mhs->angkatan }}</td>
+                                        <td class="px-4 py-2">{{ $mhs->status }}</td>
+                                        <td class="px-4 py-2 text-center">
+                                            <!-- Tombol Edit -->
+                                            <a href="{{ route('mahasiswa.edit', $mhs->id) }}"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                               Edit 
+                                            </a>
 
-<div class="relative overflow-x-auto rounded rounded-md">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Product name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Color
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Category
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Price
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4">
-                    Silver
-                </td>
-                <td class="px-6 py-4">
-                    Laptop
-                </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Magic Mouse 2
-                </th>
-                <td class="px-6 py-4">
-                    Black
-                </td>
-                <td class="px-6 py-4">
-                    Accessories
-                </td>
-                <td class="px-6 py-4">
-                    $99
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-    </x-container-layout>
+                                            <!-- Tombol Hapus -->
+                                             <form action="{{ route('mahasiswa.destroy', $mhs->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')" 
+                                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="px-4 py-2 text-center">Tidak ada data mahasiswa</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
