@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\KunjunganController;
 use App\Models\Mahasiswa;
 use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
@@ -22,7 +23,7 @@ Route::get('/data-mahasiswa', function () {
     return view('apps.data-mahasiswa', compact('mahasiswa'));
 })->middleware(['auth', 'verified'])->name('data-mahasiswa');
 
-Route::get('/data-kunjungan', function () {
+Route::get('/data-kunjungan', [KunjunganController::class, 'index'], function () {
     return view('apps.data-kunjungan');
 })->middleware(['auth', 'verified'])->name('data-kunjungan');
 
@@ -41,6 +42,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('mahasiswa', MahasiswaController::class);
+Route::resource('kunjungan', KunjunganController::class);
+
 
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');
 // Route::get('/contoh/create', [App\Http\Controllers\ContohController::class, 'create'])->name('contoh.create');
