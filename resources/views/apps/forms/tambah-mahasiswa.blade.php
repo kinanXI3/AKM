@@ -28,8 +28,8 @@
                 <div class="mb-5">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
                     <select name="status" class="w-full border border-gray-300 rounded px-3 py-2" required>
-                        <option value="aktif">Aktif</option>
-                        <option value="nonaktif">Nonaktif</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Nonaktif">Nonaktif</option>
                     </select>
                 </div>
 
