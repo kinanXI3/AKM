@@ -111,7 +111,7 @@
                 borderColor: '#374151',
                 backgroundColor: '#374151',
                 fill: false,
-                tension: 0.4
+                tension: 0.2
             }]
         };
 

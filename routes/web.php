@@ -5,6 +5,7 @@ use App\Http\Controllers\KunjunganController;
 use App\Models\Mahasiswa;
 use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,13 +24,13 @@ Route::get('/data-mahasiswa', function () {
     return view('apps.data-mahasiswa', compact('mahasiswa'));
 })->middleware(['auth', 'verified'])->name('data-mahasiswa');
 
-Route::get('/data-kunjungan', [KunjunganController::class, 'index'], function () {
-    return view('apps.data-kunjungan');
-})->middleware(['auth', 'verified'])->name('data-kunjungan');
+Route::get('/data-kunjungan', [KunjunganController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('data-kunjungan');
 
-Route::get('/riwayat-kunjungan', function () {
-    return view('apps.riwayat-kunjungan');
-})->middleware(['auth', 'verified'])->name('riwayat-kunjungan');
+Route::get('/riwayat-kunjungan', [KunjunganController::class, 'riwayat'])
+    ->middleware(['auth', 'verified'])
+    ->name('riwayat-kunjungan');
 
 Route::get('/statistik-kunjungan', function () {
     return view('apps.statistik-kunjungan');
@@ -43,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('mahasiswa', MahasiswaController::class);
 Route::resource('kunjungan', KunjunganController::class);
+
+Route::post('/absen/check', [AbsenController::class, 'check'])->name('absen.check');
 
 
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');

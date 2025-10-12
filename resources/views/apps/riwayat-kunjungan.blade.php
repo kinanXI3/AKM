@@ -25,8 +25,8 @@
                     </div>
 
                     {{-- Tabel Riwayat Kunjungan --}}
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div class="overflow-x-auto rounded-lg">
+                        <table class="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg text-left">
                             <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                                 <tr>
                                     <th class="px-4 py-2">No</th>
