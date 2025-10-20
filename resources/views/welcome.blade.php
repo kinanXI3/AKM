@@ -21,7 +21,8 @@
                 document.getElementById('toast').style.display = 'none';
             }, 2500);
         </script>
-    @endif
+        @endif
+        
         <div class="w-full max-w-screen-xl rounded-lg p-8 flex flex-row items-center text-white relative">
             <div class="leading-8 w-full">
                 <h1 class="text-cyan-300 text-4xl font-bold">Selamat Datang</h1>
@@ -40,7 +41,7 @@
                             <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
                         </div>
                         <x-primary-button class="text-center w-full">
-                            Absen
+                            {{ __('Absen') }}
                         </x-primary-button>
                     </div>
                 </form>

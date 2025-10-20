@@ -12,10 +12,10 @@
                 <h1>Total Pengunjung Hari Ini</h1>
                 <div class="w-full h-max flex flex-row items-center gap-4 p-3 my-3">
                     <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
-                    <h1 class="text-3xl font-bold">150</h1>
+                    <h1 class="text-3xl font-bold">{{ $totalHariIni }}</h1>
                 </div>
                 <x-primary-button class="w-full">
-                    {{ __('Lihat Detail') }}
+                    <a href="{{ route('data-kunjungan') }}" class="w-full h-max">Lihat Selengkapnya</a>
                 </x-primary-button>
 
                 <!-- Total Jurusan -->
@@ -24,9 +24,10 @@
                 <h1>Total Jurusan</h1>
                 <div class="w-full h-max flex flex-row items-center gap-4 p-3 my-3">
                     <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
-                    <h1 class="text-3xl font-bold">150</h1>
+                    <h1 class="text-3xl font-bold">5</h1>
                 </div>
                 <x-primary-button class="w-full">
+                    <a href="{{ route('data-kunjungan') }}"></a>
                     {{ __('Lihat Detail') }}
                 </x-primary-button>
             </div>

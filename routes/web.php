@@ -7,6 +7,7 @@ use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Kunjungan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,12 +16,14 @@ Route::get('/', function () {
 Route::get('/admin', [ForbiddenController::class, 'showForbiddenPage'])->name('forbidden');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $totalHariIni = Kunjungan::where('tanggal', now()->toDateString())->count();
+    return view('dashboard', compact('totalHariIni'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Isi Aplikasi
 Route::get('/data-mahasiswa', function () {
     $mahasiswa = Mahasiswa::all();
+    $totalMahasiswwa = $mahasiswa->count();
     return view('apps.data-mahasiswa', compact('mahasiswa'));
 })->middleware(['auth', 'verified'])->name('data-mahasiswa');
 
