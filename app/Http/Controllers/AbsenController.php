@@ -26,7 +26,7 @@ class AbsenController extends Controller
                 'nama' => $mahasiswa->nama,
                 'tanggal' => now()->toDateString(),
                 'waktu' => now()->toTimeString(),
-                'metode' => 'Manual',
+                'metode' => 'Manual'
             ]);
 
             return redirect()->back()->with([

@@ -39,6 +39,7 @@
                                     <th class="px-4 py-2">Tanggal</th>
                                     <th class="px-4 py-2">Waktu</th>
                                     <th class="px-4 py-2">Metode</th>
+                                    <th class="px-4 py-2">Kategori</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,7 @@
                                         <td class="px-4 py-2">{{ $k->tanggal }}</td>
                                         <td class="px-4 py-2">{{ $k->waktu }}</td>
                                         <td class="px-4 py-2">{{ $k->metode }}</td>
+                                        <td class="px-4 py-2">{{ $k->kategori }}</td>
                                     </tr>
                                 @empty
                                     <tr>

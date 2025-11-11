@@ -14,7 +14,7 @@
                     <div class="flex justify-between items-center mb-8">
                         <div class="flex items-center space-x-2 text-lg font-medium">
                             <i class="fa-solid fa-calendar-days text-gray-200"></i>
-                            <span id="tanggal-terpilih">23 September 2025</span>
+                            <span id="tanggal-terpilih">Tanggal</span>
                         </div>
                         <button id="btn-filter" class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
                             <i class="fa-solid fa-filter mr-2"></i>
@@ -46,15 +46,15 @@
                     <div class="space-y-3 mb-8">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-users text-gray-200"></i>
-                            <span>Total Pengunjung: <strong>271 orang</strong></span>
+                            <span id="total-pengunjung">Total Pengunjung: <strong>0 orang</strong></span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-user-graduate text-gray-200"></i>
-                            <span>Mahasiswa: <strong>250</strong></span>
+                            <span id="total-mahasiswa">Mahasiswa: <strong>0</strong></span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-person-walking text-gray-200"></i>
-                            <span>Tamu / Non-mahasiswa: <strong>21</strong></span>
+                            <span id="total-tamu">Tamu / Non-mahasiswa: <strong>0</strong></span>
                         </div>
                     </div>
 
@@ -84,6 +84,19 @@
     <script>
         const ctx = document.getElementById('chartKunjungan').getContext('2d');
         let currentChart;
+        let chartData = {};
+
+        async function fetchData() {
+            const response = await fetch("{{ route('statistik.data') }}");
+            chartData = await response.json();
+
+            // update statistik ringkas
+            document.getElementById('total-pengunjung').innerHTML = `Total Pengunjung: <strong>${chartData.total_pengunjung} orang</strong>`;
+            document.getElementById('total-mahasiswa').innerHTML = `Mahasiswa: <strong>${chartData.total_mahasiswa}</strong>`;
+            document.getElementById('total-tamu').innerHTML = `Tamu / Non-mahasiswa: <strong>${chartData.total_tamu}</strong>`;
+
+            renderChart('metode');
+        }
 
         // Data
         const dataMetode = {
@@ -134,7 +147,7 @@
                     options: {
                         plugins: { legend: { display: false } },
                         scales: { y: { beginAtZero: true } },
-                        maintainAspectRatio: false // Tambahkan ini
+                        maintainAspectRatio: false 
                     }
                 });
                 document.getElementById('legend-metode').classList.add('hidden');
@@ -146,7 +159,7 @@
                 options: {
                     plugins: { legend: { display: false } },
                     scales: { y: { beginAtZero: true } },
-                    maintainAspectRatio: false // Tambahkan ini
+                    maintainAspectRatio: false 
                 }
             });
             document.getElementById('legend-metode').classList.add('hidden');

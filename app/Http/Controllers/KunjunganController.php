@@ -3,50 +3,97 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Kunjungan;
 
 class KunjunganController extends Controller
 {
+    //Kunjungan
     public function index(Request $request)
     {
-        $query = Kunjungan::query();
+        $tanggal = $request->input('tanggal');
+        $search = $request->input('search');
 
-        // Filter Tanggal
-        if ($request->filled('tanggal')){
-            $query->whereDate('tanggal', $request->tanggal);
-        }
+        // Query kunjungan mahasiswa
+        $queryMahasiswa = DB::table('kunjungan')
+            ->select(
+                'nim',
+                'nama',
+                'tanggal',
+                'waktu',
+                'metode',
+                DB::raw('"Mahasiswa" as kategori')
+            );
 
-        //Pencarian Nim
-        if ($request->filled('search')){
-            $query->where(function($q) use ($request){
-                $q->where('nim', 'like', '%'.$request->search.'%')
-                  ->orWhere('nama', 'like', '%'.$request->search.'%');
-            });
-        }
+        // Query kunjungan non-mahasiswa
+        $queryNonMahasiswa = DB::table('non_mahasiswa')
+            ->select(
+                DB::raw('instansi as nim'),
+                'nama',
+                DB::raw('DATE(created_at) as tanggal'),
+                DB::raw('TIME(created_at) as waktu'),
+                DB::raw('"Manual" as metode'),
+                DB::raw('"Non-Mahasiswa" as kategori')
+            );
 
-        $kunjungan = $query->orderBy('tanggal', 'desc')->paginate(10);
+        // Gabungkan keduanya
+        $query = $queryMahasiswa->unionAll($queryNonMahasiswa);
+
+        // Bungkus hasil union untuk filter & paginate
+        $kunjungan = DB::query()->fromSub($query, 'u')
+            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
+            ->when($search, fn($q) =>
+                $q->where('nim', 'like', "%$search%")
+                  ->orWhere('nama', 'like', "%$search%")
+            )
+            ->orderByDesc('tanggal')
+            ->orderByDesc('waktu')
+            ->paginate(10);
 
         return view('apps.data-kunjungan', compact('kunjungan'));
     }
 
+    //Riwayat Kunjungan
     public function riwayat(Request $request)
     {
-        $query = Kunjungan::query();
+        $tanggal = $request->input('tanggal');
+        $search = $request->input('search');
 
-        // Filter by date
-        if ($request->filled('tanggal')) {
-            $query->whereDate('tanggal', $request->tanggal);
-        }
+        // Query mahasiswa
+        $queryMahasiswa = DB::table('kunjungan')
+            ->select(
+                'nim',
+                'nama',
+                'tanggal',
+                'waktu',
+                'metode',
+                DB::raw('"Mahasiswa" as kategori')
+            );
 
-        // Search by NIM or Nama
-        if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('nim', 'like', '%'.$request->search.'%')
-                  ->orWhere('nama', 'like', '%'.$request->search.'%');
-            });
-        }
+        // Query non-mahasiswa
+        $queryNonMahasiswa = DB::table('non_mahasiswa')
+            ->select(
+                DB::raw('instansi as nim'),
+                'nama',
+                DB::raw('DATE(created_at) as tanggal'),
+                DB::raw('TIME(created_at) as waktu'),
+                DB::raw('"Manual" as metode'),
+                DB::raw('"Non-Mahasiswa" as kategori')
+            );
 
-        $riwayat = $query->orderBy('tanggal', 'desc')->paginate(10);
+        // Gabungkan hasil
+        $query = $queryMahasiswa->unionAll($queryNonMahasiswa);
+
+        // Bungkus hasil union untuk filter & paginate
+        $riwayat = DB::query()->fromSub($query, 'u')
+            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
+            ->when($search, fn($q) =>
+                $q->where('nim', 'like', "%$search%")
+                  ->orWhere('nama', 'like', "%$search%")
+            )
+            ->orderByDesc('tanggal')
+            ->orderByDesc('waktu')
+            ->paginate(10);
 
         return view('apps.riwayat-kunjungan', compact('riwayat'));
     }

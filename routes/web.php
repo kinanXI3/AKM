@@ -6,6 +6,8 @@ use App\Models\Mahasiswa;
 use App\Http\Controllers\ForbiddenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\AbsenNonController;
+use App\Http\Controllers\StatistikController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Kunjungan;
 
@@ -49,6 +51,13 @@ Route::resource('mahasiswa', MahasiswaController::class);
 Route::resource('kunjungan', KunjunganController::class);
 
 Route::post('/absen/check', [AbsenController::class, 'check'])->name('absen.check');
+Route::get('/absen/nonmahasiswa', function () {
+    return view('welcome'); // ganti 'absen.index' sesuai nama file blade kamu
+})->name('absen.nonmahasiswa.form');
+Route::post('/absen/nonmahasiswa', [AbsenNonController::class, 'storeNonMahasiswa'])->name('absen.nonmahasiswa');
+
+Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik.index');
+Route::get('/statistik/data', [StatistikController::class, 'getData'])->name('statistik.data');
 
 
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');

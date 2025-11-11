@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kunjungan', function (Blueprint $table) {
+        Schema::create('non_mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->string('nim');
             $table->string('nama');
-            $table->date('tanggal');
-            $table->time('waktu');
-            $table->enum('metode', ['RFID', 'QR', 'Manual']);
+            $table->string('instansi')->nullable();
+            $table->string('keperluan')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kunjungan');
+        Schema::dropIfExists('non_mahasiswa');
     }
 };
