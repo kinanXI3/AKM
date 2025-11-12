@@ -24,62 +24,65 @@
         </script>
         @endif
         
-        <div class="w-full max-w-screen-xl rounded-lg p-8 flex flex-row items-center text-white relative">
-            <div class="leading-8 w-full">
-                <h1 class="text-cyan-300 text-4xl font-bold">Selamat Datang</h1>
-                <p class="text-md text-gray-300">Silakan pilih jenis absensi di bawah ini.</p>
-            </div>
-
-            <div class="flex flex-col w-full items-end gap-6 justify-end">
-
-                <!-- Tombol Switch Form -->
-                <div class="flex gap-3">
-                    <button id="btnMahasiswa" class="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">Mahasiswa</button>
-                    <button id="btnNonMahasiswa" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-semibold">Non-Mahasiswa</button>
+        <div class="w-full max-w-screen-xl rounded-lg p-8 flex items-center text-white relative">
+            <div class="w-full mx-auto flex flex-col md:flex-row items-stretch gap-6">
+                <div class="w-full md:w-1/2 flex items-center justify-center p-6">
+                    <div class="text-center md:text-left">
+                        <h1 class="text-cyan-300 text-4xl font-bold">Selamat Datang</h1>
+                        <p class="text-md text-gray-300 mt-2">Silakan pilih jenis absensi di bawah ini.</p>
+                    </div>
                 </div>
 
-                <!-- FORM MAHASISWA -->
-                <form id="formMahasiswa" method="POST" action="{{ route('absen.check') }}" class="w-full">
-                    @csrf
-                    <div class="mb-5 flex flex-col gap-4 mt-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">NIM</label>
-                            <input type="text" name="nim" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                <div class="w-full md:w-1/2 flex items-center justify-center p-6">
+                    <div class="w-full max-w-md">
+                        <div class="flex gap-3 mb-4 justify-center">
+                            <button id="btnMahasiswa" class="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">Mahasiswa</button>
+                            <button id="btnNonMahasiswa" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-semibold">Non-Mahasiswa</button>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
-                            <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
-                        </div>
-                        <x-primary-button class="text-center w-full">
-                            {{ __('Absen') }}
-                        </x-primary-button>
-                    </div>
-                </form>
 
-                <!-- FORM NON-MAHASISWA -->
-                <form id="formNonMahasiswa" method="POST" action="{{ route('absen.nonmahasiswa') }}" class="w-full hidden">
-                    @csrf
-                    <div class="mb-5 flex flex-col gap-4 mt-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
-                            <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Instansi / Asal</label>
-                            <input type="text" name="instansi" placeholder="Misal: SMA X, Umum, Alumni, Dosen Tamu..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Keperluan</label>
-                            <input type="text" name="keperluan" placeholder="Misal: Membaca, Penelitian, Kunjungan..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
-                        </div>
-                        <x-primary-button class="text-center w-full">
-                            {{ __('Absen') }}
-                        </x-primary-button>
-                    </div>
-                </form>
+                        <!-- FORM MAHASISWA -->
+                        <form id="formMahasiswa" method="POST" action="{{ route('absen.check') }}" class="w-full">
+                            @csrf
+                            <div class="mb-5 flex flex-col gap-4 mt-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">NIM</label>
+                                    <input type="text" name="nim" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
+                                    <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                </div>
+                                <x-primary-button class="text-center w-full">
+                                    {{ __('Absen') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
 
+                        <!-- FORM NON-MAHASISWA -->
+                        <form id="formNonMahasiswa" method="POST" action="{{ route('absen.nonmahasiswa') }}" class="w-full hidden">
+                            @csrf
+                            <div class="mb-5 flex flex-col gap-4 mt-2">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
+                                    <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Instansi / Asal</label>
+                                    <input type="text" name="instansi" placeholder="Misal: SMA X, Umum, Alumni, Dosen Tamu..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Keperluan</label>
+                                    <input type="text" name="keperluan" placeholder="Misal: Membaca, Penelitian, Kunjungan..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                </div>
+                                <x-primary-button class="text-center w-full">
+                                    {{ __('Absen') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
+         </div>
     </div>
 
     <script>
