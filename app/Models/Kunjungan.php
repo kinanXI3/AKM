@@ -19,6 +19,8 @@ class Kunjungan extends Model
         'metode',
     ];
 
+    public $timestamps = true;
+
     // --- added: numeric enum mapping & casts ---
     public const METODE_RFID = 0;
     public const METODE_QR    = 1;

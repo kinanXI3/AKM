@@ -56,10 +56,11 @@ Route::get('/absen/nonmahasiswa', function () {
 })->name('absen.nonmahasiswa.form');
 Route::post('/absen/nonmahasiswa', [AbsenNonController::class, 'storeNonMahasiswa'])->name('absen.nonmahasiswa');
 
-Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik.index');
-Route::get('/statistik/data', [StatistikController::class, 'getData'])->name('statistik.data');
+Route::get('/statistik-kunjungan', [StatistikController::class, 'index'])
+    ->name('statistik-kunjungan');
 
-
+Route::get('/statistik/data', [StatistikController::class, 'getData'])
+    ->name('statistik.data');
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');
 // Route::get('/contoh/create', [App\Http\Controllers\ContohController::class, 'create'])->name('contoh.create');
 require __DIR__.'/auth.php';

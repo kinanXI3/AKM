@@ -68,11 +68,11 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Instansi / Asal</label>
-                                    <input type="text" name="instansi" placeholder="Misal: SMA X, Umum, Alumni, Dosen Tamu..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                    <input type="text" name="instansi" placeholder="Ex: SMA X, Umum, Alumni, Dosen Tamu" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Keperluan</label>
-                                    <input type="text" name="keperluan" placeholder="Misal: Membaca, Penelitian, Kunjungan..." class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                    <input type="text" name="keperluan" placeholder="Ex: Membaca, Penelitian, Kunjungan" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
                                 </div>
                                 <x-primary-button class="text-center w-full">
                                     {{ __('Absen') }}
