@@ -11,33 +11,37 @@ class AbsenController extends Controller
     public function check(Request $request)
     {
         $request->validate([
-            'nim' => 'required',
-            'nama' => 'required',
+            'nim' => 'required|string',
         ]);
 
-        $mahasiswa = Mahasiswa::where('nim', $request->nim)
-            ->where('nama', $request->nama)
-            ->first();
+        $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
 
-        if ($mahasiswa) {
-            // Insert new kunjungan
-            Kunjungan::create([
-                'nim' => $mahasiswa->nim,
-                'nama' => $mahasiswa->nama,
-                'tanggal' => now()->toDateString(),
-                'waktu' => now()->toTimeString(),
-                'metode' => 'Manual'
-            ]);
-
-            return redirect()->back()->with([
-                'absen_status' => 'success',
-                'absen_message' => 'Berhasil masuk absen!',
-            ]);
-        } else {
+        if (! $mahasiswa) {
             return redirect()->back()->with([
                 'absen_status' => 'fail',
-                'absen_message' => 'NIM atau Nama tidak ditemukan!',
+                'absen_message' => 'NIM tidak ditemukan!',
             ]);
         }
+
+        // Optional: prevent duplicate absen same day
+        // if (Kunjungan::where('nim', $mahasiswa->nim)->whereDate('tanggal', now())->exists()) {
+        //     return redirect()->back()->with([
+        //         'absen_status' => 'fail',
+        //         'absen_message' => 'Sudah absen hari ini.',
+        //     ]);
+        // }
+
+        Kunjungan::create([
+            'nim' => $mahasiswa->nim,
+            'nama' => $mahasiswa->nama,
+            'tanggal' => now()->toDateString(),
+            'waktu' => now()->format('H:i:s'),
+            'metode' => 'Manual',
+        ]);
+
+        return redirect()->back()->with([
+            'absen_status' => 'success',
+            'absen_message' => 'Berhasil Masuk Absen!',
+        ]);
     }
 }

@@ -46,11 +46,11 @@
                             <div class="mb-5 flex flex-col gap-4 mt-2">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">NIM</label>
-                                    <input type="text" name="nim" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama</label>
-                                    <input type="text" name="nama" class="w-full border rounded px-3 py-2 bg-gray-950 border-gray-800 dark:bg-gray-800 dark:border-gray-500 dark:text-white text-black" required>
+                                    <input type="text" name="nim" class="
+                                    w-full border rounded px-3 py-2 bg-gray-950
+                                    border-gray-800 dark:bg-gray-800 
+                                    dark:border-gray-500 dark:text-white text-black" 
+                                    required>
                                 </div>
                                 <x-primary-button class="text-center w-full">
                                     {{ __('Absen') }}

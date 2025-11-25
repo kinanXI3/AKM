@@ -26,10 +26,10 @@
                     <img src="{{ asset('images/icons/person.svg') }}" alt="person" class="h-10 w-10">
                     <h1 class="text-3xl font-bold">5</h1>
                 </div>
-                <x-primary-button class="w-full">
+                <!-- <x-primary-button class="w-full">
                     <a href="{{ route('data-kunjungan') }}"></a>
                     {{ __('Lihat Detail') }}
-                </x-primary-button>
+                </x-primary-button> -->
             </div>
 
             <!-- Total Mahasiswa Terdaftar -->
@@ -41,9 +41,9 @@
                         {{ $totalMahasiswa ?? \App\Models\Mahasiswa::count() }}
                     </h1>
                 </div>
-                <x-primary-button class="w-full">
+                <!-- <x-primary-button class="w-full">
                     {{ __('Lihat Detail') }}
-                </x-primary-button>
+                </x-primary-button> -->
             </div>
         </div>
     </x-container-layout>
