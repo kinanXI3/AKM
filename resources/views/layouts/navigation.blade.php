@@ -24,10 +24,10 @@
                         <img src="{{ asset('images/icons/data.svg') }}" alt="data">
                         {{ __('Data Kunjungan') }}
                     </x-nav-link>
-                    <!-- <x-nav-link :href="route('riwayat-kunjungan')" :active="request()->routeIs('riwayat-kunjungan')">
+                    <x-nav-link :href="route('riwayat-kunjungan')" :active="request()->routeIs('riwayat-kunjungan')">
                         <img src="{{ asset('images/icons/activity.svg') }}" alt="activity">
                         {{ __('Riwayat Kunjungan') }}
-                    </x-nav-link> -->
+                    </x-nav-link>
                     <x-nav-link :href="route('statistik-kunjungan')" :active="request()->routeIs('statistik-kunjungan')">
                         <img src="{{ asset('images/icons/bar.svg') }}" alt="bar">
                         {{ __('Statistik Kunjungan') }}

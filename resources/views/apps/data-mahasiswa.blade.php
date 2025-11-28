@@ -16,6 +16,26 @@
                         {{ __(' Tambah Data') }}
                     </x-primary-button>
 
+                    <div class="flex justify-between mb-4">
+                        <form method="GET" action="{{ route('data-mahasiswa') }}" class="flex space-x-2">
+
+                            {{-- Filter Jurusan --}}
+                            <select name="jurusan"
+                                class="rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 px-3 py-2">
+                                <option value="">Semua Jurusan</option>
+                                <option value="TI" {{ request('jurusan') == 'TI' ? 'selected' : '' }}>TI</option>
+                                <option value="SI" {{ request('jurusan') == 'SI' ? 'selected' : '' }}>SI</option>
+                                <option value="DKV" {{ request('jurusan') == 'DKV' ? 'selected' : '' }}>DKV</option>
+                                <option value="AK" {{ request('jurusan') == 'AK' ? 'selected' : '' }}>AK</option>
+                                <option value="MI" {{ request('jurusan') == 'MI' ? 'selected' : '' }}>MI</option>
+                            </select>
+
+                            {{-- Tombol filter --}}
+                            <x-primary-button>Filter</x-primary-button>
+                        </form>
+                    </div>
+
+
                     {{-- Tabel Data Mahasiswa --}}
                     <div class="overflow-x-auto rounded-lg">
                         <table class="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg text-left">

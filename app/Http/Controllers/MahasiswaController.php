@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MahasiswaImport;
 use App\Models\Mahasiswa;
 
 class MahasiswaController extends Controller
 {
-    public function index(){
-        $mahasiswa = Mahasiswa::all();
+    public function index(Request $request)
+    {
+        $mahasiswa = Mahasiswa::query();
+
+        // Filter jurusan
+        if ($request->jurusan) {
+            $mahasiswa->where('jurusan', $request->jurusan);
+        }
+
+        $mahasiswa = $mahasiswa->paginate(10)->withQueryString();
+
         return view('apps.data-mahasiswa', compact('mahasiswa'));
     }
 
@@ -18,17 +29,29 @@ class MahasiswaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nim' => 'required|unique:mahasiswa',
+        // Jika upload Excel
+        if ($request->hasFile('excel')) {
+            Excel::import(new MahasiswaImport, $request->file('excel'));
+
+            return redirect()->route('mahasiswa.index')
+                ->with('success', 'Data mahasiswa berhasil diimport!');
+        }
+
+        // Jika input manual
+        $validated = $request->validate([
+            'nim' => 'required',
             'nama' => 'required',
             'jurusan' => 'required',
-            'angkatan' => 'required',
-            'status' => 'required|in:Aktif,Nonaktif',
+            'angkatan' => 'required|numeric',
+            'status' => 'required',
         ]);
 
-        Mahasiswa::create($request->all());
-        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil ditambahkan.');
+        Mahasiswa::create($validated);
+
+        return redirect()->route('mahasiswa.index')
+            ->with('success', 'Mahasiswa berhasil ditambahkan!');
     }
+
 
     public function edit($id){
         $mahasiswa = Mahasiswa::findOrFail($id);

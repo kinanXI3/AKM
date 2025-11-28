@@ -30,26 +30,32 @@
                             <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                                 <tr>
                                     <th class="px-4 py-2">No</th>
-                                    <th class="px-4 py-2">NIM</th>
+                                    <th class="px-4 py-2">NIM / Instansi</th>
                                     <th class="px-4 py-2">Nama</th>
                                     <th class="px-4 py-2">Tanggal</th>
                                     <th class="px-4 py-2">Waktu</th>
                                     <th class="px-4 py-2">Metode</th>
+                                    <th class="px-4 py-2">Kategori</th>
+                                    <th class="px-4 py-2">Keperluan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($riwayat as $i => $r)
+                                @forelse ($riwayat as $r)
                                     <tr class="border-t border-gray-200 dark:border-gray-700">
-                                        <td class="px-4 py-2">{{ $i + 1 }}</td>
-                                        <td class="px-4 py-2">{{ $r->nim }}</td>
+                                        <td class="px-4 py-2">{{ $loop->iteration + ($riwayat->currentPage() - 1) * $riwayat->perPage() }}</td>
+                                        <td class="px-4 py-2">
+                                            {{ ($r->kategori === 'Non-Mahasiswa' && !empty($r->instansi)) ? $r->instansi : ($r->nim ?? '-') }}
+                                        </td>
                                         <td class="px-4 py-2">{{ $r->nama }}</td>
-                                        <td class="px-4 py-2">{{ $r->tanggal }}</td>
-                                        <td class="px-4 py-2">{{ $r->waktu }}</td>
-                                        <td class="px-4 py-2">{{ $r->metode }}</td>
+                                        <td class="px-4 py-2">{{ optional($r->tanggal)->format('d/m/Y') ?? '-' }}</td>
+                                        <td class="px-4 py-2">{{ $r->waktu ?? '-' }}</td>
+                                        <td class="px-4 py-2">{{ $r->metode ?? '-' }}</td>
+                                        <td class="px-4 py-2">{{ $r->kategori ?? '-' }}</td>
+                                        <td class="px-4 py-2">{{ $r->keperluan ?? '-' }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 py-2 text-center text-gray-500 dark:text-gray-400">
+                                        <td colspan="8" class="px-4 py-2 text-center text-gray-500 dark:text-gray-400">
                                             Riwayat kunjungan belum ada.
                                         </td>
                                     </tr>
@@ -60,7 +66,7 @@
 
                     {{-- Pagination --}}
                     <div class="mt-4">
-                        {{ $riwayat->links() }}
+                        {{ $riwayat->withQueryString()->links() }}
                     </div>
 
                 </div>

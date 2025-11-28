@@ -18,6 +18,9 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->enum('metode', ['RFID', 'QR', 'Manual']);
+            $table->string('kategori');
+            $table->tinyint('is_history')->default(0);
+            $table->boolean('is_history')->default(false);
             $table->timestamps();
         });
     }

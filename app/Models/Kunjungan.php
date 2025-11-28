@@ -2,56 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Kunjungan extends Model
 {
-    use HasFactory;
-
     protected $table = 'kunjungan';
 
     protected $fillable = [
-        'nim',
-        'nama',
-        'tanggal',
-        'waktu',
-        'metode',
+        'nim', 'nama', 'tanggal', 'waktu', 'metode',
+        'kategori', 'instansi', 'keperluan', 'is_history'
     ];
-
-    public $timestamps = true;
-
-    // --- added: numeric enum mapping & casts ---
-    public const METODE_RFID = 0;
-    public const METODE_QR    = 1;
-    public const METODE_MANUAL= 2;
 
     protected $casts = [
-        'metode' => 'integer',
+        'is_history' => 'boolean',
+        'tanggal' => 'date',
     ];
 
-    public function setMetodeAttribute($value): void
+    public function scopeToday($query)
     {
-        if (is_string($value)) {
-            $v = strtolower($value);
-            $map = [
-                'rfid'   => self::METODE_RFID,
-                'qr'     => self::METODE_QR,
-                'manual' => self::METODE_MANUAL,
-            ];
-            $this->attributes['metode'] = $map[$v] ?? (int) $value;
-        } else {
-            $this->attributes['metode'] = (int) $value;
-        }
+        $today = now()->setTimezone(config('app.timezone'))->toDateString();
+        return $query->whereDate('tanggal', $today)->where(function($q){
+            $q->whereNull('is_history')->orWhere('is_history', false);
+        });
     }
 
-    public function getMetodeLabelAttribute(): string
+    public function scopeHistory($query)
     {
-        return match ($this->metode) {
-            self::METODE_RFID => 'RFID',
-            self::METODE_QR => 'QR',
-            self::METODE_MANUAL => 'Manual',
-            default => (string)$this->metode,
-        };
+        $today = now()->setTimezone(config('app.timezone'))->toDateString();
+        return $query->where(function($q) use ($today) {
+            $q->where('is_history', true)
+              ->orWhereDate('tanggal', '<', $today);
+        });
     }
 }

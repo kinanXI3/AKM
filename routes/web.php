@@ -17,17 +17,19 @@ Route::get('/', function () {
 
 Route::get('/admin', [ForbiddenController::class, 'showForbiddenPage'])->name('forbidden');
 
+Route::get('/register', function(){
+    return view('auth.register');
+});
+
 Route::get('/dashboard', function () {
     $totalHariIni = Kunjungan::where('tanggal', now()->toDateString())->count();
     return view('dashboard', compact('totalHariIni'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Isi Aplikasi
-Route::get('/data-mahasiswa', function () {
-    $mahasiswa = Mahasiswa::all();
-    $totalMahasiswwa = $mahasiswa->count();
-    return view('apps.data-mahasiswa', compact('mahasiswa'));
-})->middleware(['auth', 'verified'])->name('data-mahasiswa');
+Route::get('/data-mahasiswa', [App\Http\Controllers\MahasiswaController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('data-mahasiswa');
 
 Route::get('/data-kunjungan', [KunjunganController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -61,6 +63,12 @@ Route::get('/statistik-kunjungan', [StatistikController::class, 'index'])
 
 Route::get('/statistik/data', [StatistikController::class, 'getData'])
     ->name('statistik.data');
+
+Route::get('/kunjungan', [KunjunganController::class, 'index'])->name('kunjungan.index');
+Route::get('/kunjungan/riwayat', [KunjunganController::class, 'riwayat'])->name('kunjungan.riwayat');
+
+
 // Route::get('/contoh', [App\Http\Controllers\ContohController::class, 'index'])->name('contoh.index');
 // Route::get('/contoh/create', [App\Http\Controllers\ContohController::class, 'create'])->name('contoh.create');
+
 require __DIR__.'/auth.php';

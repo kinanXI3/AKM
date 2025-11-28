@@ -2,99 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kunjungan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-// use App\Models\Kunjungan;
 
 class KunjunganController extends Controller
 {
-    //Kunjungan
+    //  Menampilkan data kunjungan hari ini
     public function index(Request $request)
     {
-        $tanggal = $request->input('tanggal');
-        $search = $request->input('search');
+        // Ambil data kunjungan untuk hari ini
+        // Jika ada pencarian (search), filter berdasarkan NIM atau Nama
+        $kunjungan = Kunjungan::today()
+                    ->when($request->search, fn($q) =>
+                        $q->where('nim', 'like', '%' . $request->search . '%')
+                          ->orWhere('nama', 'like', '%' . $request->search . '%')
+                    )
+                    // Urutkan berdasarkan waktu
+                    ->orderBy('waktu','asc')
+                    //paginasi 15 data per halaman
+                    ->paginate(15)
+                    ->withQueryString(); // agar query search tetap ada saat pindah halaman
 
-        // Query kunjungan mahasiswa
-        $queryMahasiswa = DB::table('kunjungan')
-            ->select(
-                'nim',
-                'nama',
-                'tanggal',
-                'waktu',
-                'metode',
-                DB::raw('"Mahasiswa" as kategori')
-            );
-
-        // Query kunjungan non-mahasiswa
-        $queryNonMahasiswa = DB::table('non_mahasiswa')
-            ->select(
-                DB::raw('instansi as nim'),
-                'nama',
-                DB::raw('DATE(created_at) as tanggal'),
-                DB::raw('TIME(created_at) as waktu'),
-                DB::raw('"Manual" as metode'),
-                DB::raw('"Non-Mahasiswa" as kategori')
-            );
-
-        // Gabungkan keduanya
-        $query = $queryMahasiswa->unionAll($queryNonMahasiswa);
-
-        // Bungkus hasil union untuk filter & paginate
-        $kunjungan = DB::query()->fromSub($query, 'u')
-            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
-            ->when($search, fn($q) =>
-                $q->where('nim', 'like', "%$search%")
-                  ->orWhere('nama', 'like', "%$search%")
-            )
-            ->orderByDesc('tanggal')
-            ->orderByDesc('waktu')
-            ->paginate(10);
-
+        // Kirim data ke view
         return view('apps.data-kunjungan', compact('kunjungan'));
     }
 
-    //Riwayat Kunjungan
+    //  riwayat kunjungan
     public function riwayat(Request $request)
     {
-        $tanggal = $request->input('tanggal');
-        $search = $request->input('search');
+        $query = Kunjungan::query();
 
-        // Query mahasiswa
-        $queryMahasiswa = DB::table('kunjungan')
-            ->select(
-                'nim',
-                'nama',
-                'tanggal',
-                'waktu',
-                'metode',
-                DB::raw('"Mahasiswa" as kategori')
-            );
+        // Filter berdasarkan tanggal tertentu
+        if ($request->filled('tanggal')) {
+            $query->whereDate('tanggal', $request->tanggal);
 
-        // Query non-mahasiswa
-        $queryNonMahasiswa = DB::table('non_mahasiswa')
-            ->select(
-                DB::raw('instansi as nim'),
-                'nama',
-                DB::raw('DATE(created_at) as tanggal'),
-                DB::raw('TIME(created_at) as waktu'),
-                DB::raw('"Manual" as metode'),
-                DB::raw('"Non-Mahasiswa" as kategori')
-            );
+        } else {
+            // Jika tidak memilih tanggal,
+            // akan menampilkan data yang sudah ditandai sebagai riwayat (is_history = true)
+            // atau tanggal kunjungannya sudah lewat hari ini
+            $today = now()->setTimezone(config('app.timezone'))->toDateString();
 
-        // Gabungkan hasil
-        $query = $queryMahasiswa->unionAll($queryNonMahasiswa);
+            $query->where(function($q) use ($today) {
+                $q->where('is_history', true)
+                  ->orWhereDate('tanggal', '<', $today);
+            });
+        }
 
-        // Bungkus hasil union untuk filter & paginate
-        $riwayat = DB::query()->fromSub($query, 'u')
-            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
-            ->when($search, fn($q) =>
-                $q->where('nim', 'like', "%$search%")
-                  ->orWhere('nama', 'like', "%$search%")
+        // Filter berdasarkan pencarian (NIM atau Nama)
+        $riwayat = $query
+            ->when($request->search, fn($q) =>
+                $q->where('nim', 'like', '%' . $request->search . '%')
+                  ->orWhere('nama', 'like', '%' . $request->search . '%')
             )
-            ->orderByDesc('tanggal')
-            ->orderByDesc('waktu')
-            ->paginate(10);
+            // Urutkan dari tanggal terbaru → terlama
+            ->orderBy('tanggal', 'desc')
+            // Jika tanggal sama, urutkan berdasarkan waktu terbaru → terlama
+            ->orderBy('waktu', 'desc')
+            // Paginasi 15 data
+            ->paginate(15)
+            ->withQueryString();
 
+        // Kirim data ke view
         return view('apps.riwayat-kunjungan', compact('riwayat'));
     }
 }

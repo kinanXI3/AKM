@@ -37,6 +37,8 @@ class AbsenController extends Controller
             'tanggal' => now()->toDateString(),
             'waktu' => now()->format('H:i:s'),
             'metode' => 'Manual',
+            'kategori' => 'Mahasiswa',
+            'is_history' => false,
         ]);
 
         return redirect()->back()->with([
